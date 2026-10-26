@@ -78,9 +78,23 @@ gauge-blended rainfall.
 
 ![Benchmark](figures/benchmark_products.png)
 
-**CNN forecast.** See the notebook. The question is whether a convolutional network using the last three
-monthly rainfall maps beats climatology and persistence for next-month anomalies. The test set
-(2019-2025) is never used during training or model selection, and the result is reported as it comes.
+**CNN forecast: no skill over climatology, as expected.** A convolutional network takes the last three
+monthly CHIRPS anomaly maps and forecasts the next month's anomaly map. On the test years 2019-2025,
+which were never used for training or model selection, for rainy-season targets (June-October):
+
+| Forecast | RMSE (standardised anomaly) | Skill vs climatology | Spatial correlation |
+|---|---|---|---|
+| Climatology | 0.899 | 0 % | - |
+| Persistence | 1.358 | -128 % | 0.00 |
+| CNN | 0.911 | -2.7 % | 0.04 |
+
+The CNN does far better than persistence, but it does not beat climatology: early stopping kept a model
+that stays close to the monthly normal. This is the expected result, stated in the notebook before it
+was run. Rainfall in the Sahel is driven largely by sea-surface temperatures and the West African
+monsoon, which past rainfall maps alone do not contain. A useful monthly forecast needs those drivers
+as inputs, and should be benchmarked against ECMWF SEAS5 or the PRESASS consensus forecasts. (The
+persistence error in millimetres shown in the notebook is inflated by the back-transform of large
+dry-season anomalies; the standardised score above is the one to read.)
 
 ## Methods
 
