@@ -1,0 +1,6 @@
+data/raw/
+__pycache__/
+.venv/
+.ipynb_checkpoints/
+data/processed/daily_sites.csv
+data/processed/daily_clean.csv
